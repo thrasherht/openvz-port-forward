@@ -11,7 +11,8 @@ WHITE=`tput setaf 7`
 STD=`tput sgr0`
 BOLD=`tput bold`
 #Primary IP to forwart ports from
-SERVERIP="67.227.240.49" 
+SERVERIP="67.227.240.49"
+NETCONFIG="/etc/network/interfaces"
 # ----------------------------------
 # Step #2: User defined function
 # ----------------------------------
@@ -19,6 +20,19 @@ pause(){
   read -p "Press [Enter] key to continue..." fackEnterKey
 }
 
+restore_check(){
+	#Check for presence of iptables restore in network configuration.
+			echo "Checking ${RED}$NETCONFIG${STD} for presence of iptables-restore command"
+			echo ""
+			echo ""
+		if grep -Fq "iptables-restore" $NETCONFIG ; then
+			show_menus
+		else
+			echo "${RED}IPTables Restore directive not found in network configuration"
+			echo "Please setup ${WHITE}iptables-restore${RED} in your network configuration${STD}"
+			exit
+		fi
+}
 #Used to add new port to iptables for forwarding 
 one(){
 	#Setup variables for backups information
@@ -110,7 +124,7 @@ trap '' SIGINT SIGQUIT SIGTSTP
 # ------------------------------------
 while true
 do
- 
+	restore_check
 	show_menus
 	read_options
 done
