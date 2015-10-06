@@ -11,7 +11,7 @@ WHITE=`tput setaf 7`
 STD=`tput sgr0`
 BOLD=`tput bold`
 #Primary IP to forwart ports from
-SERVERIP="67.227.240.49"
+SERVERIP="INSERT EXTERNAL IP HERE"
 NETCONFIG="/etc/network/interfaces"
 # ----------------------------------
 # Step #2: User defined function
